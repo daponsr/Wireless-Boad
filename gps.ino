@@ -1,5 +1,5 @@
 void llegir_gps(void){
-  habilitador1 = true;          //es posa a true perque entri sempre al bucle
+  habilitador1 = true;     
   Serial.println("ENTRAT a la mesura del GPS");
   while(habilitador1 == true){
     llegir_PWM_wifi_1();
@@ -7,7 +7,7 @@ void llegir_gps(void){
   }
 }
 
-void trobar_com(void){      //per trobar la linea del missatge que ens interessa
+void trobar_com(void){    
   char act = 0;
   String acu = "";
   if(Serial2.available()>0){
@@ -15,11 +15,11 @@ void trobar_com(void){      //per trobar la linea del missatge que ens interessa
         //Serial.write(act);
         if(act == 36 ){ //un $
           acu = "";
-          while(act != 44 ) {  //una ,
+          while(act != 44 ) {
 
-            acu += act;     //anem guardant
+            acu += act;     
             while(Serial2.available()<=0);
-            act = Serial2.read();   //llegim
+            act = Serial2.read();
           }
           if(acu == "$GNRMC"){
             Serial.println("¬¬¬¬¬¬¬¬¬¬¬¬BO");
@@ -37,24 +37,22 @@ void trobar_com(void){      //per trobar la linea del missatge que ens interessa
             acu = "";
             act = 0;
             estat_gps = "NOP";
-            habilitador1 = false; //per sortir del bucle i no perdre temps
+            habilitador1 = false;
           }
         }
       }
 }
 
 
-void desc_string_gps(String a_mir){         //per agafar només la info que ens interessa
+void desc_string_gps(String a_mir){   
   //Serial.println("DESXIIIIIIIIIF");
   int cont1 = 0;  //comptador
   int index_c = 0;
   String mir_act = "";
-  String form_act = "";   //Es que es forma en cada moment
+  String form_act = ""; 
   while(cont1 <= 6){
     mir_act = a_mir[index_c];
     if(mir_act == ","){
-      //Serial.print("fins la coma: ");
-      //Serial.println(form_act);
       if(cont1 == 2){       //estat
         estat_gps = form_act;
         //Serial.print("Estat: ");
@@ -71,17 +69,14 @@ void desc_string_gps(String a_mir){         //per agafar només la info que ens 
         if(estat_gps == "A"){
           lati_d = form_act;
         }
-        //Serial.print("Lati D: ");
-        //Serial.println(lati_d);
+
       }
       else if(cont1 == 5){  //longi
         if(estat_gps == "A"){
           longi = form_act;
         }
-        //Serial.print("Longi: ");
-        //Serial.println(longi);
       }
-      else if(cont1 == 6){                 //longi_d
+      else if(cont1 == 6){                 
         if(estat_gps == "A"){
           longi_d = form_act;
         }
@@ -102,6 +97,4 @@ void desc_string_gps(String a_mir){         //per agafar només la info que ens 
       index_c += 1;
     }
   }
-  //Serial.println("Informació GPS:");
-  //Serial.println("Estat: " + estat_gps + "     Latitut: " + lati + " " + lati_d + "    Longitut: " + longi + " " + longi_d);
 }

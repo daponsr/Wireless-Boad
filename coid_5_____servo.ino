@@ -1,5 +1,5 @@
 
-//GIROSCOPIO Y ACCELEROMETRO
+
 #include <Adafruit_MPU6050.h>
 #include <Adafruit_Sensor.h>
 #include <Wire.h>
@@ -14,7 +14,7 @@ auto timer = timer_create_default();
 
 //_________________________________________________________________________
 
-//sensor HUMEDAD
+// Humidity Sensor
 #include <DHT.h>
 #define DHTBOX 29
 #define DHTMOTOR 31
@@ -24,7 +24,7 @@ DHT dht1(DHTBOX, DHTTYPE);
 DHT dht2(DHTMOTOR, DHTTYPE);
 //__________________________________________________________________________
 
-//sensor NIVEL DE AGUA 
+//Water Level
 int AGUABOX = 0;
 int AGUAMOTOR = 1; 
 //__________________________________________________________________________
@@ -53,7 +53,7 @@ String lati = "non";
 String lati_d = "non";
 String longi = "non";
 String longi_d = "non";
-boolean habilitador1 = true;     //per la creació del bucle infinit del GPS
+boolean habilitador1 = true;    
 boolean activador2 = false;
 ////
 String info_accelerometre = "";
@@ -82,20 +82,19 @@ void setup() {
   digitalWrite(49, LOW);
   digitalWrite(47, LOW);
   
-  confi_acc();    //selecionar totes les opcions de l'acceleròmetre
+  confi_acc();
   dht1.begin();
   dht2.begin();
   llegir_gps();
-  creacio_AP();             //per crear el AP
-  //conect_wifi_casa();
+  creacio_AP(); 
   digitalWrite(47, HIGH);
-  espera_connec_disp(1);    //per esperar a la connexió que volem
+  espera_connec_disp(1);
   enviar_wifi("0", "PROVA");
   Serial.println("ENVIAT");
   
   pinMode(pinPwm, OUTPUT);
 
-  myservo.attach(pinServo); //iniciem el servo
+  myservo.attach(pinServo);
 
   
   pinMode(AGUABOX, INPUT);
@@ -110,7 +109,7 @@ void loop() {
   timer.tick();
   if(Serial3.available()>0){
     mirat_instant = Serial3.read();
-    if(mirat_instant == 36){  //es troba un "$" (inici d'informació del PWM
+    if(mirat_instant == 36){
       llegir_PWM_wifi();
     }
   }  

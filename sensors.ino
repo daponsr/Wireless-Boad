@@ -3,9 +3,8 @@
 float h1 = 0.0;
 float h2 = 0.0;
 void humedad (){
-  // Leemos la humedad relativa
-  h1 = dht1.readHumidity();   //pin 29
-  h2 = dht2.readHumidity();   //pin 31
+  h1 = dht1.readHumidity();
+  h2 = dht2.readHumidity();
   info_humedad = ";" + String(h1) + ";" + String(h2);
   Serial.println("HUMITAT 1: " + String(h1));
   Serial.println("HUMITAT 2: " + String(h2));
@@ -32,7 +31,7 @@ void ace_gir(){
 /*
 //MOTOR DRIVER
 void driver(){
-  if(Serial.available() > 0) //Detecta si hay alguna entrada por serial
+  if(Serial.available() > 0)
    {
       iSpeed = Serial.parseInt();
       Serial.println(iSpeed);
